@@ -20,7 +20,7 @@ class Department(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=200)
     roll_no = models.CharField(max_length=20)
-    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
