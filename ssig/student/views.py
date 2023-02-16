@@ -9,6 +9,19 @@ from .models import Student
 from .serializers import StudentSerializer
 # Create your views here.
 
+class StudentList(APIView):
+    def get(self , request):
+        queryset = Student.objects.select_related('department').all()
+        serializer = StudentSerializer(queryset  , many = True)
+        return Response(serializer.data)
+    
+    def post(self , request):
+        serializer = StudentSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 @api_view([ 'GET','PUT', 'DELETE'])
 def student_list(request, id):
     student = get_object_or_404(Student, pk =id )
@@ -24,16 +37,3 @@ def student_list(request, id):
         student.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-@api_view(['GET', 'POST']) 
-
-def student_all(request):
-    if request.method == 'GET':
-        queryset = Student.objects.select_related('department_id').all()
-        serializer = StudentSerializer(queryset  , many = True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
-        serializer = StudentSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        # serialize r.validated_data
-        return Response(serializer.data, status=status.HTTP_201_CREATED)

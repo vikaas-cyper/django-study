@@ -9,7 +9,4 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Student
         fields = ['id', 'name', 'roll_no', 'department']
-            
-    # def validate(self, attrs):
-    #     return super().validate(attrs)
     
