@@ -9,6 +9,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Student
         fields = ['id', 'name', 'roll_no', 'department']
-        
-    department =  serializers.StringRelatedField(source = "department_id")
+            
+    # def validate(self, attrs):
+    #     return super().validate(attrs)
     
